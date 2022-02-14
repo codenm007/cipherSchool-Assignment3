@@ -59,7 +59,7 @@ const Browse = () => {
         "Authorization":`Bearer ${localStorage.getItem("token")}`
       }
     }).then((data) => {
-      
+     
       setPosts(data.data.data);
       
     })

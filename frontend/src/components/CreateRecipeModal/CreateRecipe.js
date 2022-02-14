@@ -1,14 +1,17 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useState,useRef } from "react";
 import axios from 'axios';
 import cogoToast from "cogo-toast";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faCamera} from '@fortawesome/free-solid-svg-icons';
 
 export default function MyModal({reRender}) {
   let [isOpen, setIsOpen] = useState(false);
   const [title , setTitle] = useState('');
   const [desciption , setDesciption] = useState('');
   const [pic,setPic] = useState('https://res.cloudinary.com/dqpurfmpd/image/upload/v1644825815/receipe/d0e6a0a79d5f4197a51f4ca065393ffe_fnjwa5.jpg');
- 
+  const [imageSelected,setimageSelected] = useState('');
 
   const AddReceipe = () =>{
    
@@ -41,6 +44,32 @@ export default function MyModal({reRender}) {
     
 
   }
+
+  const ImageUpload = (e) =>{
+      const [file] = e.target.files;
+      const formData = new FormData();
+      formData.append("file",file);
+      formData.append("upload_preset","jxcwuz7z");
+      formData.append("cloud_name","dqpurfmpd");
+  
+      axios.post("https://api.cloudinary.com/v1_1/dqpurfmpd/image/upload",formData)
+      .then(data =>{
+       
+        cogoToast.success("Looks yummy !");
+        setPic(data.data.url);
+       
+      }).catch(err =>{
+        console.log(err);
+      } )
+    
+  }
+
+  const fileRef = useRef();
+
+  // const handleChange = (e) => {
+    
+  //   console.log(file);
+  // };
 
   function closeModal() {
     setIsOpen(false);
@@ -122,16 +151,25 @@ export default function MyModal({reRender}) {
                onChange={(event) => setDesciption(event.target.value)}
                   />
                   <img src = {pic} />
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                   // onClick={()=>{AddReceipe()}}
-                  >
-                    Upload image 
-                  </button>
 
+
+                  <div>
+                  <button  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"  onClick={() => fileRef.current.click()}>
+                  <p style = {{color:"blue",fontSize:"1rem" , paddingLeft:"10px"}}>Snap that yummy curry ! </p>
+                  <FontAwesomeIcon icon={faCamera}  style = {{color:"blue",fontSize:"1.5rem" , paddingLeft:"10px"}}/> 
+                  </button>
+                  <input
+                    ref={fileRef}
+                    accept="image/png, image/gif, image/jpeg"
+                    onChange={ImageUpload}
+                    multiple={false}
+                    type="file"
+                    hidden
+                  />
+                  </div>
 
                 </div>
+
 
                 <div className="mt-4 flex justify-end">
                   <button
