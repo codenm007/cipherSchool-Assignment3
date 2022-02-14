@@ -47,6 +47,7 @@ export default function MyModal({reRender}) {
 
   const ImageUpload = (e) =>{
       const [file] = e.target.files;
+      cogoToast.info("Please wait while we upload the pic !")
       const formData = new FormData();
       formData.append("file",file);
       formData.append("upload_preset","jxcwuz7z");
