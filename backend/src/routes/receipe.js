@@ -12,7 +12,7 @@ const decodeJWT = require("../middleware/jwt_decode");
 
 //anonymous user routes
 
-router.get('/receipes',receipeController.getAllReceipes);
+router.get('/',receipeController.getAllReceipes);
 
 
 //protected routes
