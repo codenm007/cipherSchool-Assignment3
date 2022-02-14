@@ -61,7 +61,7 @@ const Browse = () => {
     }).then((data) => {
      
       setPosts(data.data.data);
-      
+      console.log(data.data.data)
     })
     .catch(err=>{
       cogoToast.error("Some error occured !");
@@ -83,7 +83,7 @@ const Browse = () => {
             .map(post =>{
 
               return (
-                <div className='card w-full border border-gray-300 rounded-md'>
+                <div className='card w-full border border-gray-300 rounded-md' key={post.post._id}>
                 <div className='title m-3 text-left text-lg flex justify-between items-center'>
                   
                   <h4 style = {{fontWeight:"bold",fontSize:"1.8rem"}}>{post.post.title}</h4>
