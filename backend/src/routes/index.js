@@ -8,9 +8,9 @@ const path = require("path");
 const receipeRouter = require("./receipe");
 const userRouter = require("./user");
   
-//router.use('/receipe',receipeRouter);
+router.use('/receipe',receipeRouter);
 
-//router.use('/user',userRouter);
+router.use('/user',userRouter);
 
 
 module.exports = router;

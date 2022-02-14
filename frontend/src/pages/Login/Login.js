@@ -1,39 +1,53 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import GoogleLogin from 'react-google-login';
+import axios from "axios";
+
+
 
 const Login = () => {
+
+  const onGoogleSuccess = (response) => {
+    const access_token = response.tokenId;
+
+    console.log(response,"token")
+    axios({
+       method: 'post',
+       url: "user/auth/google",
+       data: { 
+          "token":response.tokenId
+        }
+    }).then((res) => {
+      const { user, token } = res.data.data;
+      
+      // Save the JWT inside a cookie
+      localStorage.setItem('token', token);
+
+      window.location.href = "/home"
+    }).catch((err) => {
+       console.log(err,99);
+     // throw new Error(err);
+    })
+  }
+
+  const onFailure = (error) =>{
+    console.log(error ,434334);
+  
+  }
+
   return (
     <div className="login">
       <div className="flex justify-center items-center p-10">
         <div className="container border w-[600px] border-indigo-500 rounded-md py-2 px-4">
           <div className="heading flex justify-center">
-            <h2 className="text-2xl font-semibold text-indigo-500">Login</h2>
+            <h2 className="text-2xl font-semibold text-indigo-500">Signin with your social account !</h2>
           </div>
-          <div className=" py-4 space-y-4">
-            
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              className="border border-gray-300 rounded-md w-full outline-none py-2 px-3 text-gray-600
-               focus:border-indigo-500 transform duration-300"
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="border border-gray-300 rounded-md w-full outline-none py-2 px-3 text-gray-600
-              focus:border-indigo-500 transform duration-300"
-            />
-            <button
-              className=" outline-none px-4 py-2 bg-indigo-500 rounded-md text-white w-full hover:bg-indigo-600
-            transform duration-300"
-            >
-              Login
-            </button>
-            <p>Don't have an account <span className="text-indigo-500 cursor-pointer">
-              <Link to='/register'>Sign Up</Link></span></p>
-          </div>
+          <GoogleLogin
+            clientId="199477342550-j14pfeol654ljk7f119lmenau59vdj2t.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={onGoogleSuccess}
+            onFailure={onFailure}
+          />
         </div>
       </div>
     </div>
