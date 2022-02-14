@@ -15,6 +15,16 @@ const Browse = () => {
     
   }
 
+  const compareDescending  = (a,b) =>{
+    if(new Date(b.post.createdAt) > new Date(a.post.createdAt)){
+      return +1
+    }else if (new Date(b.post.createdAt) < new Date(a.post.createdAt)){
+      return -1
+    }else{
+      return 0;
+    }
+  }
+
   const [posts,setPosts] = useState([]);
 
   useEffect(()=>{
@@ -44,7 +54,9 @@ const Browse = () => {
 
           <CreateRecipe />
           {(posts.length)?(
-            posts.map(post =>{
+            posts
+            .sort(compareDescending)
+            .map(post =>{
 
               return (
                 <div className='card w-full border border-gray-300 rounded-md'>
