@@ -55,6 +55,9 @@ app.use(
 
 app.use(parser.json());
 
+// all frontend routes are listed here exclusively
+app.use('/',express.static(path.join(__dirname, 'build')));
+
 
   //importing all backend routes
    const index_routes = require("./routes/index");
