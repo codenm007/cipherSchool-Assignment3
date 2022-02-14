@@ -14,8 +14,6 @@ const Login = () => {
 
   const onGoogleSuccess = (response) => {
     const access_token = response.tokenId;
-
-    console.log(response,"token")
     axios({
        method: 'post',
        url: "user/auth/google",
@@ -45,7 +43,7 @@ const Login = () => {
       <div className="flex justify-center items-center p-10">
         <div className="container border w-[600px] border-indigo-500 rounded-md py-2 px-4">
           <div className="heading flex justify-center">
-            <h2 className="text-2xl font-semibold text-indigo-500">Signin with your social account !</h2>
+            <h2 className="text-2xl font-semibold text-indigo-500">Namaste , chaliye suru karteh hain !</h2>
           </div>
           <GoogleLogin
             clientId="199477342550-j14pfeol654ljk7f119lmenau59vdj2t.apps.googleusercontent.com"
