@@ -12,18 +12,20 @@ const decodeJWT = require("../middleware/jwt_decode");
 
 //anonymous user routes
 
-router.get('/',receipeController.getAllReceipes);
 
 
 //protected routes
 
-router.get('/receipe', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.getMyReceipes);
+router.get('/',passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.getAllReceipes);
 
-router.post('/receipe', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.addReceipe);
 
-router.put('/receipe', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.updateReceipe);
+router.get('/food', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.getMyReceipes);
 
-router.delete('/receipe', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.DeleteReceipe);
+router.post('/food', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.addReceipe);
+
+router.put('/food', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.updateReceipe);
+
+router.delete('/food', passport.authenticate("jwt", { session: false }),decodeJWT,receipeController.DeleteReceipe);
 
 
 

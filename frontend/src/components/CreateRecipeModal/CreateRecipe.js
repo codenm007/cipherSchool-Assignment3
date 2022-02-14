@@ -1,8 +1,45 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import axios from 'axios';
+import cogoToast from "cogo-toast";
 
 export default function MyModal() {
   let [isOpen, setIsOpen] = useState(false);
+  const [title , setTitle] = useState('');
+  const [desciption , setDesciption] = useState('');
+  const [pic,setPic] = useState('https://res.cloudinary.com/dqpurfmpd/image/upload/v1644825815/receipe/d0e6a0a79d5f4197a51f4ca065393ffe_fnjwa5.jpg');
+ 
+
+  const AddReceipe = () =>{
+    console.log(title)
+    if(title.length === 0){
+      cogoToast.error("Post should have a title !")
+    }else if(desciption.length === 0 ){
+      cogoToast.error("Post should have a description !")
+    }else {
+      axios({
+        method: 'post',
+        url: "receipe/food",
+        headers:{
+          "Authorization":`Bearer ${localStorage.getItem("token")}`
+        },
+        data: { 
+          title:title,
+          body:desciption,
+          pic:pic
+         }
+     }).then((res) => {
+       
+       cogoToast.success(res.data.message)
+        closeModal();
+     }).catch((err) => {
+        console.log(err,99);
+      // throw new Error(err);
+     })
+    }
+    
+
+  }
 
   function closeModal() {
     setIsOpen(false);
@@ -73,6 +110,7 @@ export default function MyModal() {
                     placeholder="Enter Title"
                     className="border border-gray-300 rounded-md w-full outline-none py-2 px-3 text-gray-600
                focus:border-indigo-500 transform duration-300"
+               onChange={(event) => setTitle(event.target.value)}
                   />
                   <textarea
                     type="text"
@@ -80,21 +118,25 @@ export default function MyModal() {
                     placeholder="It contains ..."
                     className="border border-gray-300 h-[100px] rounded-md w-full outline-none py-2 px-3 text-gray-600
                focus:border-indigo-500 transform duration-300"
+               onChange={(event) => setDesciption(event.target.value)}
                   />
-                  <input
-                    type="date"
-                    name="date"
-                    placeholder="DD/MM/YYYY"
-                    className="border border-gray-300 rounded-md w-full outline-none py-2 px-3 text-gray-600
-               focus:border-indigo-500 transform duration-300"
-                  />
+                  <img src = {pic} />
+                  <button
+                    type="button"
+                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                   // onClick={()=>{AddReceipe()}}
+                  >
+                    Upload image 
+                  </button>
+
+
                 </div>
 
                 <div className="mt-4 flex justify-end">
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={closeModal}
+                    onClick={()=>{AddReceipe()}}
                   >
                     Create
                   </button>
