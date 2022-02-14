@@ -5,7 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 //import 'bootstrap/dist/css/bootstrap.min.css';
-axios.defaults.baseURL = "http://localhost:8081/";
+axios.defaults.baseURL = "https://receipewala.herokuapp.com/";
 
 ReactDOM.render(
   <BrowserRouter>
