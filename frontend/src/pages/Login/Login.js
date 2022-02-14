@@ -2,10 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import GoogleLogin from 'react-google-login';
 import axios from "axios";
-
+import isLoggedIn from "../../functions/isLoggedIn";
 
 
 const Login = () => {
+ // if user is logged in then taking directly to home page 
+  if(isLoggedIn()){
+   
+    window.location.href = "/home"
+  }
 
   const onGoogleSuccess = (response) => {
     const access_token = response.tokenId;
