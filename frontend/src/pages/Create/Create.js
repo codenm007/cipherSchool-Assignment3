@@ -1,8 +1,12 @@
 import React from "react";
 import Empty from "./empty.svg";
 import CreateRecipe from "../../components/CreateRecipeModal/CreateRecipe";
-
+import isLoggedIn from "../../functions/isLoggedIn";
 const Create = () => {
+  if(!isLoggedIn()){
+    
+    window.location.href = "/"
+  }
   return (
     <div className="create">
       <div className="empty flex justify-center p-4">

@@ -1,9 +1,16 @@
 import React from 'react'
 import Empty from '../Create/empty.svg'
 import CreateRecipe from '../../components/CreateRecipeModal/CreateRecipe'
+import isLoggedIn from "../../functions/isLoggedIn";
 
 const Browse = () => {
+  if(!isLoggedIn()){
+    console.log(87128712)
+    window.location.href = "/"
+  }
+  
   return (
+
     <div className='browse p-4'>
       
       <div className='flex justify-center'>
