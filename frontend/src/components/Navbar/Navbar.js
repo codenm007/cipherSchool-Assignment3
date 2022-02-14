@@ -10,11 +10,6 @@ const Navbar = () => {
       
       return(
         <>
-        <Link to="/myposts">
-        <p className="text-lg hover:text-indigo-500 transform duration-300">
-          My Posts
-        </p>
-      </Link>
         <Link to = "/" className="ml-auto" >
             
         {isLoggedIn() ?(

@@ -2,7 +2,6 @@ import './App.css';
 import { Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
-import Create from './pages/Create/Create';
 import Browse from './pages/Browse/Browse';
 
 function App() {
@@ -11,7 +10,6 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Login />} />
-        <Route path='/myposts' element={<Create />} />
         <Route path='/home' element={<Browse />} />
       </Routes>
     </div>

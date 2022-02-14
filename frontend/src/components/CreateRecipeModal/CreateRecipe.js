@@ -4,14 +4,14 @@ import axios from 'axios';
 import cogoToast from "cogo-toast";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faCamera} from '@fortawesome/free-solid-svg-icons';
+import {faCamera,faPaperPlane,faPizzaSlice} from '@fortawesome/free-solid-svg-icons';
 
 export default function MyModal({reRender}) {
   let [isOpen, setIsOpen] = useState(false);
   const [title , setTitle] = useState('');
   const [desciption , setDesciption] = useState('');
   const [pic,setPic] = useState('https://res.cloudinary.com/dqpurfmpd/image/upload/v1644825815/receipe/d0e6a0a79d5f4197a51f4ca065393ffe_fnjwa5.jpg');
-  const [imageSelected,setimageSelected] = useState('');
+  
 
   const AddReceipe = () =>{
    
@@ -33,7 +33,10 @@ export default function MyModal({reRender}) {
          }
      }).then((res) => {
        
-       cogoToast.success(res.data.message)
+       cogoToast.success(res.data.message);
+       setTitle('');
+       setDesciption('');
+       setPic('https://res.cloudinary.com/dqpurfmpd/image/upload/v1644825815/receipe/d0e6a0a79d5f4197a51f4ca065393ffe_fnjwa5.jpg')
         closeModal();
         reRender();
      }).catch((err) => {
@@ -82,13 +85,14 @@ export default function MyModal({reRender}) {
 
   return (
     <>
-      <div className=" inset-0 flex items-center justify-center">
+      <div  className=" inset-0 flex items-center justify-center">
         <button
           type="button"
           onClick={openModal}
+          style={{fontSize:"1.5rem"}}
           className="inline-flex w-full justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
         >
-          Create Recipe
+          Add a new food <FontAwesomeIcon  icon={faPizzaSlice} className = 'px-2' />
         </button>
       </div>
 
@@ -132,7 +136,7 @@ export default function MyModal({reRender}) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Create
+                  Lets note , what we need !
                 </Dialog.Title>
                 <div className="mt-6 space-y-5">
                   <input
@@ -178,7 +182,8 @@ export default function MyModal({reRender}) {
                     className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={()=>{AddReceipe()}}
                   >
-                    Create
+                    Post 
+                    <FontAwesomeIcon className="px-2" icon={faPaperPlane} />
                   </button>
                 </div>
               </div>
