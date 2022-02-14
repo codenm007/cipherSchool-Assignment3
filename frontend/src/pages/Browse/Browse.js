@@ -11,6 +11,10 @@ const Browse = () => {
     window.location.href = "/"
   }
 
+  const DeletePost = (id) =>{
+    
+  }
+
   const [posts,setPosts] = useState([]);
 
   useEffect(()=>{
@@ -40,17 +44,31 @@ const Browse = () => {
 
           <CreateRecipe />
           {(posts.length)?(
-          <div className='card w-full border border-gray-300 rounded-md'>
-          <div className='title m-3 text-left text-lg'>
-            <h4>Title</h4>
-          </div>
-          <div className='body m-3 text-left text-lg'>
-            <h4>Body</h4>
-          </div>
-          <div className='image mb-6'>
-            <img className='w-full h-[400px]' src={Empty} alt="" />
-          </div>
-        </div>
+            posts.map(post =>{
+
+              return (
+                <div className='card w-full border border-gray-300 rounded-md'>
+                <div className='title m-3 text-left text-lg'>
+                  <h4 style = {{fontWeight:"bold",fontSize:"1.8rem"}}>{post.post.title}</h4>
+                </div>
+                <div className='body m-3 text-left text-lg'>
+                  <h4 style = {{fontSize:"1rem"}}>{post.post.body}</h4>
+                </div>
+                <div className='image mb-6'>
+                  <img className='w-full h-[400px]' src={post.post.pic} alt="" />
+                </div>
+                <div className='body m-3 text-left text-lg'>
+                  <div>
+                    <span><img src = {post.Userdata.profilePic} alt="Avatar" style = {{borderRadius:"50%",width:"30px"}} /></span>
+                    <span>Posted By : {post.Userdata.firstName} {post.Userdata.lastName}</span>
+                  </div>
+                
+                  <h6 style = {{fontSize:"0.86rem" , color:"blue"}}>Posted at : {`${new Date(post.post.createdAt).toString('YYYY-MM-dd')}`}  </h6>
+                </div>
+              </div>
+              )
+            })
+
           ):(
             <div>
             <div class="container my-auto p-4" style ={{marginTop:"100px"}}>
