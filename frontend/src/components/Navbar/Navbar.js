@@ -5,7 +5,7 @@ import isLoggedIn from "../../functions/isLoggedIn";
 import LogOut from '../../functions/logout';
 import { Fragment } from 'react'
 import {  Menu, Transition } from '@headlessui/react'
-
+import Logo from '../../assets/5455637.png';
 const Navbar = () => {
 
   const navigation = [
@@ -73,10 +73,12 @@ const Navbar = () => {
         <div className="logo flex gap-5 justify-around items-center">
 
           
-          <Link to="/home">
-            <p className="text-2xl text-indigo-600 font-semibold">
-              Home
+          <Link to="/home" className = "flex">
+            <img src = {Logo} width="30px" height ="auto" />
+            <p className="text-2xl text-indigo-600 font-semibold px-2">
+              ReceipeWala
             </p>
+            
           </Link>
 
           
