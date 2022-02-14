@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import axios from 'axios';
 import cogoToast from "cogo-toast";
 
-export default function MyModal() {
+export default function MyModal({reRender}) {
   let [isOpen, setIsOpen] = useState(false);
   const [title , setTitle] = useState('');
   const [desciption , setDesciption] = useState('');
@@ -11,7 +11,7 @@ export default function MyModal() {
  
 
   const AddReceipe = () =>{
-    console.log(title)
+   
     if(title.length === 0){
       cogoToast.error("Post should have a title !")
     }else if(desciption.length === 0 ){
@@ -32,6 +32,7 @@ export default function MyModal() {
        
        cogoToast.success(res.data.message)
         closeModal();
+        reRender();
      }).catch((err) => {
         console.log(err,99);
       // throw new Error(err);

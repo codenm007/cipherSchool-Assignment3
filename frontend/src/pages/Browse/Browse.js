@@ -5,6 +5,8 @@ import isLoggedIn from "../../functions/isLoggedIn";
 import axios from 'axios';
 import cogoToast from "cogo-toast";
 import NoPostsImage from '../../assets/noposts.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faTrashCan} from '@fortawesome/free-solid-svg-icons';
 const Browse = () => {
   if(!isLoggedIn()){
     
@@ -12,7 +14,23 @@ const Browse = () => {
   }
 
   const DeletePost = (id) =>{
-    
+   
+    axios({
+      method: 'delete',
+      url: "receipe/food",
+      headers:{
+        "Authorization":`Bearer ${localStorage.getItem("token")}`
+      },
+      data: { 
+        id
+       }
+    }).then((data) => {
+      cogoToast.success(data.data.message);
+      reRender();
+    })
+    .catch(err=>{
+      cogoToast.error("Some error occured !");
+    })
   }
 
   const compareDescending  = (a,b) =>{
@@ -26,6 +44,12 @@ const Browse = () => {
   }
 
   const [posts,setPosts] = useState([]);
+  const [render,setRender] = useState(false);
+
+  const reRender = () =>{
+    
+    setRender(!render);
+  }
 
   useEffect(()=>{
     axios({
@@ -35,14 +59,14 @@ const Browse = () => {
         "Authorization":`Bearer ${localStorage.getItem("token")}`
       }
     }).then((data) => {
-      cogoToast.success(data.data.message);
+      
       setPosts(data.data.data);
-      console.log(data);
+      
     })
     .catch(err=>{
       cogoToast.error("Some error occured !");
     })
-  },[])
+  },[render])
   
   return (
 
@@ -52,7 +76,7 @@ const Browse = () => {
 
         <div className='blog w-[600px] space-y-4'>
 
-          <CreateRecipe />
+          <CreateRecipe reRender = {reRender}/>
           {(posts.length)?(
             posts
             .sort(compareDescending)
@@ -61,7 +85,12 @@ const Browse = () => {
               return (
                 <div className='card w-full border border-gray-300 rounded-md'>
                 <div className='title m-3 text-left text-lg'>
+                  <span>
                   <h4 style = {{fontWeight:"bold",fontSize:"1.8rem"}}>{post.post.title}</h4>
+                  {(post.self)?(
+                    <span onClick = {()=>{DeletePost(post.post._id)}}><FontAwesomeIcon icon={faTrashCan} /></span>
+                  ):""}
+                </span>
                 </div>
                 <div className='body m-3 text-left text-lg'>
                   <h4 style = {{fontSize:"1rem"}}>{post.post.body}</h4>
