@@ -84,13 +84,13 @@ const Browse = () => {
 
               return (
                 <div className='card w-full border border-gray-300 rounded-md'>
-                <div className='title m-3 text-left text-lg'>
-                  <span>
+                <div className='title m-3 text-left text-lg flex justify-between items-center'>
+                  
                   <h4 style = {{fontWeight:"bold",fontSize:"1.8rem"}}>{post.post.title}</h4>
                   {(post.self)?(
                     <span onClick = {()=>{DeletePost(post.post._id)}}><FontAwesomeIcon icon={faTrashCan} /></span>
                   ):""}
-                </span>
+                
                 </div>
                 <div className='body m-3 text-left text-lg'>
                   <h4 style = {{fontSize:"1rem"}}>{post.post.body}</h4>
