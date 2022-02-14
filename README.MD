@@ -1,4 +1,4 @@
-# Welcome to Chota Ninja platform !
+ # Welcome to Lpu Receipe platform !
   
 
 **Dev By : Nilanjan Majumdar**
