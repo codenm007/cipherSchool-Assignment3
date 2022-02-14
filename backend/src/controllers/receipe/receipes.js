@@ -3,7 +3,7 @@
 
 //importing models
 let receipesModel = require("../../models/receipes");
-
+let userModel = require("../../models/user"); 
 
 /******************************************** */
 //This method is for fetchis all receipes 
@@ -11,13 +11,40 @@ let receipesModel = require("../../models/receipes");
 
 exports.getAllReceipes = async (req, res) => {
     receipesModel.find()
-    .then(data =>{
-        return res.status(200).json({
-            success:true,
-            message:"All receipes fetched successfully !",
-            data
+    .then(async data =>{
+        let result = [];
+       
+        data.forEach(async post =>{
+            let UserDetails = await userModel.findById(post.userId);
+            let self = false;
+            let Userdata = {
+                firstName:UserDetails.firstName,
+                lastName:UserDetails.lastName,
+                profilePic:UserDetails.profilePic
+            }
+            if(req.user.userId ==post.userId ){
+                self = true;
+            }
+           
+            let resultData = {
+                post,
+                self,
+                Userdata
+            }
+            result.push(resultData)
+            
+            if(result.length == data.length){
+                return res.status(200).json({
+                    success:true,
+                    message:"All receipes fetched successfully !",
+                    data:result
+                })
+            }
         })
+
+
     }).catch(err => {
+        console.log(err)
         return res.status(500).json({
             success: false,
             message: "Something gone wrong",
