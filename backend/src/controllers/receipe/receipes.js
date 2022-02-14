@@ -133,8 +133,11 @@ exports.DeleteReceipe = async (req, res) => {
             data: null
         })
     }
-
-    receipesModel.findByIdAndDelete(id)
+    let query = {
+        _id:id,
+        userId:req.user.userId
+    }
+    receipesModel.findOneAndDelete(query)
     .then((data) => {
 
             return res.status(200).json({
@@ -168,7 +171,7 @@ exports.updateReceipe = async (req, res) => {
         })
     }
     let query = {
-        id,
+        _id:id,
         userId:req.user.userId
     }
     receipesModel.findOneAndUpdate( 
