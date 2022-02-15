@@ -101,7 +101,10 @@ const Browse = () => {
                 <div className='body m-3 text-left text-lg'>
                   <div>
                     <span><img src = {post.Userdata.profilePic} alt="Avatar" style = {{borderRadius:"50%",width:"30px"}} /></span>
-                    <span>Posted By : {post.Userdata.firstName} {post.Userdata.lastName}</span>
+                    <span>{(post.self)?(
+                   <p>Posted By : You</p>
+                  ):(<p> Posted By :{post.Userdata.firstName} {post.Userdata.lastName}</p>)} 
+                  </span>
                   </div>
                 
                   <h6 style = {{fontSize:"0.86rem" , color:"blue"}}>Posted at : {`${new Date(post.post.createdAt).toString('YYYY-MM-dd')}`}  </h6>
